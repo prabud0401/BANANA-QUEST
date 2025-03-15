@@ -1,0 +1,117 @@
+body {
+    font-family: 'Comic Sans MS', sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    background-image: url('images/bb1.jpg');
+}
+
+.game-container {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin: 50px auto;
+    width: 90%;
+    max-width: 500px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.player-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.lives {
+    font-size: 18px;
+    color: red;
+}
+
+.score, .round, .timer {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.question img {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 4 buttons per row */
+    gap: 10px;
+    justify-items: center;
+    margin: 20px 0;
+}
+
+.answer-button {
+    width: 40px; /* Adjust size if needed */
+    height: 40px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.answer-button:hover {
+    background: #218838;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.exit-button, .next-button {
+    background: #ffc107;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.exit-button:hover, .next-button:hover {
+    background: #e0a800;
+}
+
+/* Game Over Page Specific Styles */
+.game-over h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.game-over p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.game-over .ex-btn {
+    font-family: 'Comic Sans MS', sans-serif;
+    padding: 15px 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    background-color: #FBC02D; 
+    color: #3e2723;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.game-over .ex-btn:hover {
+    background-color: #be1414; 
+}

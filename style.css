@@ -1,0 +1,436 @@
+/* Reset and styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comic Sans MS', sans-serif;
+}
+
+/* Basic styling for the header section */
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff7b2;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for the logo */
+.logo-container {
+    width: auto;
+    padding: 0;
+}
+
+.logo {
+    max-width: 280px !important; /* Found !important using ChatGPT */
+    height: auto !important;
+}
+
+/* Styling for the title container */
+.title-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    color: #5D4037;
+    text-align: center;
+}
+
+.title-container h1 {
+    font-size: 2em;
+    color: #6D4C41;
+    margin: 0;
+}
+
+/* Styling for the main title */
+.main-title {
+    font-size: 2em;
+    font-family: 'Comic Sans MS', sans-serif;
+    color: #3e2723;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Styling for the login title container */
+.logintitle-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    color: #5D4037;
+    text-align: center;
+}
+
+/* Login title text styling */
+.logintitle-container h1,
+.login-title {
+    font-size: 3em;
+    font-family: 'Comic Sans MS', sans-serif;
+    color: #3e2723;
+    margin: 0;
+}
+
+/* Styling for the extra title containers */
+.extratitle-container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    color: #5D4037;
+    text-align: center;
+}
+
+/* Login title text styling */
+.extratitle-container h1,
+.extra-title {
+    font-size: 3em;
+    font-family: 'Comic Sans MS', sans-serif;
+    color: #3e2723;
+    margin: 0;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+body {
+    background-color: #FFEB3B;
+    background-image: url('images/bb1.jpg');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+    text-align: center;
+    color: #5D4037;
+}
+
+.button-container {
+    margin: 20px;
+}
+
+.button-container button {
+    background-color: #D32F2F;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-container button:hover {
+    background-color: #B71C1C;
+}
+
+.game-intro {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 1.2em;
+    color: #6D4C41;
+    margin: 20px 0;
+    max-width: 600px;
+}
+
+/*.logo-container img, .banana-character img {
+    max-width: 150px;
+    border-radius: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 900px;
+}*/
+
+/* Login container styling */
+.login-container {
+    background-color: #FFEB3B;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+/* Login container styling */
+.signup-container {
+    background-color: #FFEB3B;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+/* Input group styling */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    color: #3E2723;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Button container styling */
+.loginbutton-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Log In button styling */
+.login-button {
+    background-color: #D32F2F;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin: 0 10px;
+}
+
+.login-button:hover {
+    background-color: #C62828;
+}
+
+/* Back to Home button styling */
+.back-home-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin: 0 10px;
+}
+
+.back-home-button:hover {
+    background-color: #388E3C;
+}
+
+.login-container form .error-msg{
+    width: 100%;
+    padding: 5px;
+    margin: 20px;
+    border: 1px solid #e92525;
+    background-color: #e92525;
+    border-radius: 4px;
+    color: #f8f4f4;
+}
+
+/* Menu Page styling */
+.menu-container {
+    background-color: #FFEB3B;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    width: 400px;
+}
+
+.menu-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #FBC02D;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5em;
+    color: #3e2723;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.menu-btn:hover {
+    background-color: #F57F17;
+}
+
+.logout-btn {
+    background-color: #D32F2F;
+}
+
+.logout-btn:hover {
+    background-color: #be1414;
+}
+
+.play-btn {
+    background-color: #4CAF50;
+}
+
+.play-btn:hover {
+    background-color: #388E3C;
+}
+
+/* Choose Level Page styling */
+.choose-level-container {
+    text-align: center;
+    background-color: #FFEB3B;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 400px;
+}
+
+.level-btn {
+    display: block;
+    width: 100%;
+    margin: 15px 0;
+    padding: 15px 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.easy-btn {
+    background-color: #32cd32; 
+    color: white;
+}
+
+.easy-btn:hover {
+    background-color: #228b22; 
+}
+
+.medium-btn {
+    background-color: #006400; 
+    color: white;
+}
+
+.medium-btn:hover {
+    background-color: #004d00; 
+}
+
+.high-btn {
+    background-color: red; 
+    color: white;
+}
+
+.high-btn:hover {
+    background-color: darkred; 
+}
+
+/* Exit button */
+.exit-btn {
+    margin-top: 20px;
+    padding: 10px 0;
+    width: 100%;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: #FBC02D; 
+    color: #3e2723;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.exit-btn:hover {
+    background-color: #be1414; 
+}
+
+/* Game Page styling */
+.game-container {
+    text-align: center;
+    background-color: #fffacd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 80%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.lives {
+    font-size: 1.5rem;
+    color: red;
+}
+
+.score {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.round-title {
+    font-size: 2rem;
+    color: #ffcc00;
+    margin: 15px 0;
+}
+
+.question-container img {
+    max-width: 100%;
+    border: 2px solid #ffcc00;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.answers-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.answer-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #32cd32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.answer-btn:hover {
+    background-color: #228b22;
+}
+
+.timer {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    color: red;
+}

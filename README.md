@@ -1,0 +1,1 @@
+This game has been developed using 'Banana' API - https://marcconrad.com/uob/banana/api.php. This assignment asked to reflect upon the four themes: version control, interoperability, event-driven programming, and virtual identity.
