@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banana Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-yellow-100 to-yellow-200 min-h-screen">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex-1">
+                <p class="text-sm text-gray-600">
+                    We use cookies to enhance your experience. By continuing, you agree to our 
+                    <a href="#" class="text-yellow-600 hover:underline">Cookie Policy</a>.
+                </p>
+            </div>
+            <div class="flex gap-4 ml-4">
+                <button onclick="declineCookies()" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                    Decline
+                </button>
+                <button onclick="acceptCookies()" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
+                    Accept
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <nav class="flex justify-between items-center mb-8 bg-white/80 backdrop-blur-sm rounded-full p-4 shadow-lg">
+            <h1 class="text-2xl font-bold text-yellow-600 flex items-center">
+                🍌 Banana Math
+            </h1>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <span class="text-yellow-600">👤 {{ user.username }}</span>
+                </div>
+                <div class="flex gap-4">
+                    <a href="/profile" class="text-yellow-600 hover:text-yellow-700">Profile</a>
+                    <a href="/leaderboard" class="text-yellow-600 hover:text-yellow-700">Leaderboard</a>
+                    <a href="/logout" class="text-yellow-600 hover:text-yellow-700">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="bg-white/80 backdrop-blur-sm rounded-xl shadow-2xl p-8">
+            <div class="flex justify-between items-center mb-8">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-yellow-100 p-4 rounded-lg">
+                            <span class="text-2xl font-bold text-yellow-600">🏆 {{ user.high_score }}</span>
+                            <p class="text-sm text-gray-500">High Score</p>
+                        </div>
+                        <div class="bg-yellow-100 p-4 rounded-lg">
+                            <span class="text-2xl font-bold text-yellow-600" id="score">0</span>
+                            <p class="text-sm text-gray-500">Current Score</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-right space-y-2">
+                    <div class="bg-yellow-100 p-4 rounded-lg">
+                        <span class="text-2xl font-bold text-yellow-600" id="timer">{{ time_limit }}</span>
+                        <p class="text-sm text-gray-500">Seconds Left</p>
+                    </div>
+                    <div class="bg-yellow-100 p-4 rounded-lg">
+                        <span class="text-2xl font-bold text-yellow-600 capitalize">{{ difficulty }}</span>
+                        <p class="text-sm text-gray-500">Difficulty</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-content text-center mb-8">
+                <img id="question-img" src="{{ question_img }}" alt="Math problem" 
+                     class="mx-auto mb-8 h-48 object-contain animate-pulse">
+                <input type="hidden" id="solution" value="{{ solution }}">
+                <input type="hidden" id="time-limit" value="{{ time_limit }}">
+
+                <form id="answer-form" class="max-w-md mx-auto flex gap-4">
+                    <input type="number" id="answer-input" 
+                           class="flex-1 p-4 text-xl border-2 border-yellow-200 rounded-lg focus:outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500"
+                           placeholder="Enter answer"
+                           autofocus>
+                    <button type="submit" 
+                            class="px-8 py-4 bg-yellow-500 text-white text-xl rounded-lg hover:bg-yellow-600 transition-all transform hover:scale-105">
+                        ✅ Check
+                    </button>
+                </form>
+            </div>
+
+            <div class="progress-bar bg-yellow-100 h-4 rounded-full overflow-hidden">
+                <div id="time-progress" class="bg-yellow-500 h-full transition-all duration-1000" 
+                     style="width: 100%"></div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
