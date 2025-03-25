@@ -1,189 +1,11 @@
 <?php
 session_start();
-include 'config.php';
 
-$error = [];
+include 'http://localhost/banana-quest/backend/db_connect.php';
+include 'http://localhost/banana-quest/backend/functions.php';
 
-// Handle Login
-if(isset($_POST['login_submit'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = md5($_POST['password']);
-
-    $select = "SELECT * FROM player_form WHERE username = '$username' AND password = '$password'";
-    $result = mysqli_query($conn, $select);
-
-    if(mysqli_num_rows($result) > 0) {
-        $_SESSION['username'] = $username;
-        header('Location: menu.php');
-        exit();
-    } else {
-        $error[] = 'Incorrect username or password!';
-    }
-}
-
-// Handle Signup
-if(isset($_POST['signup_submit'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = md5($_POST['password']);
-    $confirmPassword = md5($_POST['confirmPassword']);
-
-    $check_user = "SELECT * FROM player_form WHERE username = '$username'";
-    $res = mysqli_query($conn, $check_user);
-
-    if(mysqli_num_rows($res) > 0) {
-        $error[] = 'Username already exists!';
-    } else {
-        if($password != $confirmPassword) {
-            $error[] = 'Passwords do not match!';
-        } else {
-            $insert = "INSERT INTO player_form(username, password) VALUES('$username', '$password')";
-            if(mysqli_query($conn, $insert)) {
-                $_SESSION['username'] = $username;
-                header('Location: menu.php');
-                exit();
-            } else {
-                $error[] = 'Registration failed!';
-            }
-        }
-    }
-}
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banana Quest</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        /* Game-themed animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(-2deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes background-scroll {
-            0% { background-position: 0 0; }
-            100% { background-position: 100% 0; }
-        }
-
-        .game-bg {
-            background: linear-gradient(45deg, #1a2f1d, #2d4a32);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 5L20 40l30-15 30 15z" fill="%234f772d" opacity="0.1"/></svg>');
-            animation: background-scroll 60s linear infinite;
-        }
-
-        .game-button {
-            position: relative;
-            border: 3px solid #facc15;
-            border-radius: 16px;
-            background: linear-gradient(145deg, #4d7c0f, #3b6213);
-            box-shadow: 0 8px 24px rgba(250, 204, 21, 0.3);
-            transition: all 0.3s ease;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .game-button:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 12px 32px rgba(250, 204, 21, 0.5);
-        }
-
-        .game-modal {
-            background: linear-gradient(145deg, #1a2f1d, #142115);
-            border: 3px solid #facc15;
-            border-radius: 16px;
-            box-shadow: 0 0 40px rgba(250, 204, 21, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-modal::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(250, 204, 21, 0.1),
-                transparent
-            );
-            animation: modal-glow 6s linear infinite;
-        }
-
-        @keyframes modal-glow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .monkey-float {
-            animation: float 3s ease-in-out infinite;
-            filter: drop-shadow(0 10px 8px rgba(0,0,0,0.3));
-        }
-
-        .crt-effect {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(0deg, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.2) 50%);
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 999;
-            mix-blend-mode: overlay;
-        }
-
-        .input-glitch {
-            position: relative;
-            background: rgba(0,0,0,0.4);
-            border: 2px solid #4d7c0f;
-            transition: all 0.3s ease;
-        }
-
-        .input-glitch:hover {
-            border-color: #facc15;
-            box-shadow: 0 0 15px rgba(250, 204, 21, 0.3);
-        }
-
-        .pixel-border {
-            position: relative;
-            border: 3px solid #4d7c0f;
-            border-image: repeating-linear-gradient(
-                45deg,
-                #4d7c0f,
-                #4d7c0f 10px,
-                #facc15 10px,
-                #facc15 20px
-            ) 30;
-        }
-    </style>
-</head>
-<body class="game-bg min-h-screen flex items-center justify-center p-4">
-    <!-- CRT Effect -->
-    <div class="crt-effect"></div>
-    
+include 'http://localhost/banana-quest/frontend/header.php';
+?>    
     <!-- Main Container -->
     <div class="relative z-10 w-full max-w-2xl text-center flex flex-col items-center space-y-8">
         <!-- Animated Header -->
@@ -200,7 +22,7 @@ if(isset($_POST['signup_submit'])) {
         </div>
         
         <!-- Animated Monkey Character -->
-        <img src="https://static.vecteezy.com/system/resources/previews/052/243/093/non_2x/adorable-monkey-holding-banana-clipart-for-craft-projects-free-png.png" 
+        <img src="http://localhost/banana-quest/frontend/assets/images/logoN.png" 
              alt="Monkey Icon" 
              class="w-32 md:w-48 monkey-float cursor-pointer hover:scale-110 transition-transform">
 
@@ -345,5 +167,6 @@ if(isset($_POST['signup_submit'])) {
             }
         }
     </script>
-</body>
-</html>
+<?php
+include 'http://localhost/banana-quest/frontend/footer.php';
+?>  

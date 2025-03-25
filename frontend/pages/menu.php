@@ -1,6 +1,8 @@
 <?php
 session_start();
-include 'config.php';
+
+include 'http://localhost/banana-quest/backend/db_connect.php';
+include 'http://localhost/banana-quest/backend/functions.php';
 
 if (!isset($_SESSION['username'])) {
     header("Location: index.php");
@@ -18,63 +20,12 @@ $username = $_SESSION['username'];
 $lastVisit = date("Y-m-d H:i:s");
 setcookie("last_visit", $lastVisit, time() + (86400 * 30), "/");
 $displayVisitMessage = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : $lastVisit;
+
+include 'http://localhost/banana-quest/frontend/header.php';  
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BANANA QUEST - <?= htmlspecialchars($username) ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(-2deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-        }
-
-        @keyframes modalEnter {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .jungle-split {
-            background: linear-gradient(45deg, #1a2f1d 50%, #0f1a10 50%);
-        }
-
-        .title-gradient {
-            background: linear-gradient(45deg, #facc15, #4d7c0f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .menu-button {
-            background: linear-gradient(145deg, #2d4a32, #1a2f1d);
-            border: 3px solid #4d7c0f;
-            transition: all 0.3s ease;
-        }
-
-        .level-modal {
-            background: linear-gradient(145deg, #142115, #1a2f1d);
-            border: 3px solid #facc15;
-            box-shadow: 0 0 40px rgba(250, 204, 21, 0.2);
-        }
-
-        .level-button {
-            background: linear-gradient(145deg, #2d4a32, #1a2f1d);
-            border: 2px solid #4d7c0f;
-            transition: all 0.3s ease;
-        }
-
-        .level-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(250, 204, 21, 0.2);
-        }
-    </style>
-</head>
-<body class="jungle-split min-h-screen">
-    <div class="flex flex-col md:flex-row min-h-screen">
+<div class="flex flex-col md:flex-row min-h-screen">
         <!-- Left Panel -->
         <div class="w-full md:w-1/2 bg-green-900/80 p-8 flex flex-col justify-center items-center text-center">
             <div class="max-w-2xl">
@@ -83,7 +34,7 @@ $displayVisitMessage = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : 
                 </h1>
                 
                 <div class="monkey-float mb-8">
-                    <img src="https://static.vecteezy.com/system/resources/previews/052/243/093/non_2x/adorable-monkey-holding-banana-clipart-for-craft-projects-free-png.png" 
+                    <img src="http://localhost/banana-quest/frontend/assets/images/logoN.png" 
                          alt="Monkey King" 
                          class="w-48 md:w-64 mx-auto animate-float">
                 </div>
@@ -179,5 +130,7 @@ $displayVisitMessage = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : 
             }
         }
     </script>
-</body>
-</html>
+
+<?php
+include 'http://localhost/banana-quest/frontend/footer.php';
+?>  
