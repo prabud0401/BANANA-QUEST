@@ -1,47 +1,20 @@
 <?php
-$error = [];
-
-// Handle Login
-if(isset($_POST['login_submit'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = md5($_POST['password']);
-
-    $select = "SELECT * FROM player_form WHERE username = '$username' AND password = '$password'";
-    $result = mysqli_query($conn, $select);
-
-    if(mysqli_num_rows($result) > 0) {
-        $_SESSION['username'] = $username;
-        header('Location: http://localhost/banana-quest/frontend/pages/menu.php');
-        exit();
-    } else {
-        $error[] = 'Incorrect username or password!';
-    }
+function sanitizeInput($data) {
+    return htmlspecialchars(strip_tags(trim($data)));
 }
 
-// Handle Signup
-if(isset($_POST['signup_submit'])) {
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = md5($_POST['password']);
-    $confirmPassword = md5($_POST['confirmPassword']);
+function redirect($url) {
+    header("Location: $url");
+    exit();
+}
 
-    $check_user = "SELECT * FROM player_form WHERE username = '$username'";
-    $res = mysqli_query($conn, $check_user);
+function isLoggedIn() {
+    return isset($_SESSION['user_id']);
+}
 
-    if(mysqli_num_rows($res) > 0) {
-        $error[] = 'Username already exists!';
-    } else {
-        if($password != $confirmPassword) {
-            $error[] = 'Passwords do not match!';
-        } else {
-            $insert = "INSERT INTO player_form(username, password) VALUES('$username', '$password')";
-            if(mysqli_query($conn, $insert)) {
-                $_SESSION['username'] = $username;
-                header('Location: http://localhost/banana-quest/frontend/pages/menu.php');
-                exit();
-            } else {
-                $error[] = 'Registration failed!';
-            }
-        }
-    }
+function getUserData($pdo, $userId) {
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt->execute([$userId]);
+    return $stmt->fetch();
 }
 ?>
