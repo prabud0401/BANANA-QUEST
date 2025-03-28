@@ -1,9 +1,8 @@
 <?php
 session_start();
 
-// Placeholder for session check (replace with actual logic later)
-$sessionAvailable = isset($_SESSION['user_id']); // Assuming 'user_id' is set after login
-
+// Check if session exists
+$sessionAvailable = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +12,7 @@ $sessionAvailable = isset($_SESSION['user_id']); // Assuming 'user_id' is set af
     <title>Banana Quest</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
-    <link href="http://localhost/banana-quest/frontend/assets/css/style.css" rel="stylesheet">
+    <link href="/banana-quest/frontend/assets/css/style.css" rel="stylesheet">
 </head>
 <body class="game-bg min-h-screen flex items-center justify-center p-4">
     <!-- CRT Effect -->
@@ -22,9 +21,8 @@ $sessionAvailable = isset($_SESSION['user_id']); // Assuming 'user_id' is set af
     <div class="relative z-10 w-full max-w-2xl text-center flex flex-col items-center space-y-8">
 <?php
 if (!$sessionAvailable) {
-    include 'http://localhost/banana-quest/frontend/pages/login.php'; // Show login/signup page if no session
+    include 'http://localhost/banana-quest/frontend/pages/login.php'; // Relative path
 } else {
-    // Default to menu if session exists; can be overridden by URL param or logic
     $page = isset($_GET['page']) ? $_GET['page'] : 'menu';
     switch ($page) {
         case 'game':

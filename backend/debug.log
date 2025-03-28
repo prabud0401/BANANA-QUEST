@@ -1,0 +1,34 @@
+Request Method: POST
+POST Data: Array
+(
+    [type] => signup
+    [username] => dhushy0401@gmail.com
+    [password] => dhushy0401@gmail.com
+    [confirmPassword] => dhushy0401@gmail.com
+)
+
+Request Method: POST
+POST Data: Array
+(
+    [type] => login
+    [username] => dhushy0401@gmail.com
+    [password] => dhushy0401@gmail.com
+)
+
+Request Method: POST
+POST Data: Array
+(
+    [type] => signup
+    [username] => dhushy0401@gmail.com
+    [password] => dhushy0401@gmail.com
+    [confirmPassword] => dhushy0401@gmail.com
+)
+
+Request Method: POST
+POST Data: Array
+(
+    [type] => login
+    [username] => dhushy0401@gmail.com
+    [password] => dhushy0401@gmail.com
+)
+
