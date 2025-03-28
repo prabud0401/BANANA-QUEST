@@ -1,0 +1,107 @@
+@keyframes jungle-pulse { 
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+@keyframes banana-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.jungle-bg { 
+    background: linear-gradient(135deg, #1a2f1d 0%, #4f772d 50%, #2d4a32 100%), 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10 80 Q50 20 90 80 L100 100 L0 100 Z" fill="%231a2f1d" opacity="0.2"/><circle cx="30" cy="30" r="5" fill="%23facc15" opacity="0.3"/></svg>') no-repeat; 
+    width: 100vw; 
+    height: 100vh; 
+    position: relative; 
+    overflow: hidden; 
+    background-size: 200% 200%; 
+    background-position: 0% 0%; 
+    animation: jungle-pulse 20s linear infinite; 
+}
+.crt-effect { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: linear-gradient(0deg, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.15) 50%); 
+    background-size: 100% 3px; 
+    pointer-events: none; 
+    z-index: 999; 
+    mix-blend-mode: overlay; 
+}
+.banana-deco { 
+    position: absolute; 
+    animation: banana-spin 10s linear infinite; 
+    opacity: 0.7; 
+}
+    /* Enhanced button styles */
+    .game-button {
+        border: 4px solid #facc15;
+        border-radius: 25px;
+        background: linear-gradient(145deg, #5a9e14, #3b6213);
+        box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
+        transition: all 0.3s ease;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+    .game-button::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 200%;
+        height: 200%;
+        background: rgba(250, 204, 21, 0.2);
+        transform: translate(-50%, -50%) scale(0);
+        border-radius: 50%;
+        transition: transform 0.5s ease;
+    }
+    .game-button:hover::after {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    .game-button:hover {
+        transform: translateY(-6px) scale(1.05);
+        box-shadow: 0 12px 40px rgba(250, 204, 21, 0.7);
+        animation: button-pulse 1.5s infinite;
+    }
+    @keyframes button-pulse {
+        0% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
+        50% { box-shadow: 0 0 20px rgba(250, 204, 21, 0.8); }
+        100% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
+    }
+
+    .game-button {
+    border: 4px solid #facc15;
+    border-radius: 25px;
+    background: linear-gradient(145deg, #5a9e14, #3b6213);
+    box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
+    transition: all 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+.game-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(250, 204, 21, 0.2);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    transition: transform 0.5s ease;
+}
+.game-button:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+.game-button:hover {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 12px 40px rgba(250, 204, 21, 0.7);
+    animation: button-pulse 1.5s infinite;
+}
+@keyframes button-pulse {
+    0% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(250, 204, 21, 0.8); }
+    100% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
+}
