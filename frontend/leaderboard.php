@@ -9,38 +9,7 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username'] ?? 'Monkey';
 ?>
 <style>
-    /* Enhanced button styles from menu.php */
-    .game-button {
-        border: 4px solid #facc15;
-        border-radius: 25px;
-        background: linear-gradient(145deg, #5a9e14, #3b6213);
-        box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
-        transition: all 0.3s ease;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-        color: #fff;
-        position: relative;
-        overflow: hidden;
-    }
-    .game-button::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 200%;
-        height: 200%;
-        background: rgba(250, 204, 21, 0.2);
-        transform: translate(-50%, -50%) scale(0);
-        border-radius: 50%;
-        transition: transform 0.5s ease;
-    }
-    .game-button:hover::after {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    .game-button:hover {
-        transform: translateY(-6px) scale(1.05);
-        box-shadow: 0 12px 40px rgba(250, 204, 21, 0.7);
-        animation: button-pulse 1.5s infinite;
-    }
+
     @keyframes button-pulse {
         0% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
         50% { box-shadow: 0 0 20px rgba(250, 204, 21, 0.8); }

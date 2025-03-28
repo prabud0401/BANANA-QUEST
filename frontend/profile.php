@@ -9,34 +9,6 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username'] ?? 'Monkey';
 ?>
 <style>
-    .profile-container {
-        position: relative;
-        background: #1a2e05;
-    }
-    .profile-container::before,
-    .profile-container::after,
-    .profile-container .extra-glow {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        pointer-events: none;
-        z-index: -1;
-    }
-    .profile-container::before {
-        background: radial-gradient(circle, rgba(250, 204, 21, 0.15) 0%, transparent 70%);
-        animation: glow-rotate 12s linear infinite;
-    }
-    .profile-container::after {
-        background: radial-gradient(circle, rgba(90, 158, 20, 0.1) 0%, transparent 60%);
-        animation: glow-rotate 8s linear infinite reverse;
-    }
-    .profile-container .extra-glow {
-        background: radial-gradient(circle, rgba(255, 140, 0, 0.12) 0%, transparent 50%);
-        animation: glow-rotate 15s linear infinite;
-    }
     @keyframes glow-rotate {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
