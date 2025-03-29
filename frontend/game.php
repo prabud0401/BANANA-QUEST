@@ -50,7 +50,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
             background: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 3000;
         }
         .popup-content {
             background: rgba(58, 98, 19, 0.9);
@@ -61,28 +61,48 @@ $username = $_SESSION['username'] ?? 'Monkey';
             width: 400px;
             text-align: center;
         }
-        .difficulty-btn {
-            background: linear-gradient(145deg, #5a9e14, #3b6213);
-            border: 2px solid #facc15;
-            border-radius: 10px;
-            padding: 0.5rem 1rem;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .difficulty-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(250, 204, 21, 0.5);
-        }
-        .difficulty-btn.selected {
-            background: linear-gradient(145deg, #facc15, #d4a017);
-            border-color: #3b6213;
-        }
-        #gameCanvas {
+        .canvas-container {
+            width: 100%;
+            height: 400px;
+            overflow-y: auto;
             border: 2px solid #facc15;
             border-radius: 10px;
             background: #3b6213;
+            position: relative;
+            transition: all 1s ease-in-out;
+        }
+        .canvas-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+            z-index: 2000;
+        }
+        /* Expand button style */
+        #expandBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2500;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 2rem;
+            color: yellow;
+        }
+        /* Overlay for score and level when fullscreen */
+        #overlayInfo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2600;
+            color: yellow;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 5px 10px;
+            border-radius: 5px;
         }
         .game-info {
             background: rgba(58, 98, 19, 0.9);
@@ -102,12 +122,18 @@ $username = $_SESSION['username'] ?? 'Monkey';
             <div class="space-y-6 animate-pulse">
                 <div class="flex items-center justify-center gap-2 sm:gap-4">
                     <i class="ri-gamepad-fill text-3xl sm:text-5xl md:text-6xl text-yellow-400 animate-spin-slow"></i>
-                    <h1 class="text-3xl sm:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 via-green-400 to-yellow-400 bg-clip-text text-transparent">BANANA QUEST</h1>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 via-green-400 to-yellow-400 bg-clip-text text-transparent">
+                        BANANA QUEST
+                    </h1>
                 </div>
-                <p class="text-base sm:text-xl md:text-2xl text-yellow-100 font-medium tracking-wide px-2"><span class="border-b-2 border-yellow-400">Game Mode</span></p>
+                <p class="text-base sm:text-xl md:text-2xl text-yellow-100 font-medium tracking-wide px-2">
+                    <span class="border-b-2 border-yellow-400">Game Mode</span>
+                </p>
             </div>
             <img src="http://localhost/banana-quest/frontend/assets/images/logoN.png" alt="Monkey Icon" class="w-24 sm:w-40 md:w-64 lg:w-80 monkey-float cursor-pointer hover:scale-110 transition-transform mx-auto">
-            <p class="text-base sm:text-xl text-yellow-100 font-medium tracking-wide"><span class="border-b-2 border-yellow-400"><?php echo htmlspecialchars($username); ?></span></p>
+            <p class="text-base sm:text-xl text-yellow-100 font-medium tracking-wide">
+                <span class="border-b-2 border-yellow-400"><?php echo htmlspecialchars($username); ?></span>
+            </p>
             <div class="text-yellow-400 space-y-2">
                 <h2 class="text-2xl sm:text-3xl font-bold">Swing into Action!</h2>
                 <p class="text-lg sm:text-xl">Get ready to play!</p>
@@ -120,32 +146,28 @@ $username = $_SESSION['username'] ?? 'Monkey';
     <!-- Right Side: Game Display Area -->
     <div class="w-full md:w-1/2 flex flex-col items-center justify-center p-4 game-section">
         <div class="w-full max-w-2xl text-center space-y-4 p-4">
+            <!-- Normal score and level display -->
             <div class="game-info flex justify-between text-yellow-400 font-bold text-lg">
                 <span>Score: <span id="scoreDisplay">0</span></span>
                 <span>Level: <span id="levelDisplay">1</span></span>
             </div>
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-400 mb-4">Banana Quest</h2>
-            <div id="bananaCounter" class="text-yellow-400 font-bold text-lg mb-4">Bananas: 3</div>
-            <canvas id="gameCanvas" width="600" height="400"></canvas>
-            <div id="monkey" class="flex justify-center gap-2 mb-4">
-                <img id="mokeyPlayer" src="https://cdn-icons-png.flaticon.com/512/1998/1998721.png" alt="Monkey" class="w-16 h-16">
+            <div id="bananaCounter" class="hidden text-yellow-400 font-bold text-lg mb-4">Bananas: 3</div>
+            <div class="canvas-container" id="canvasContainer">
+                <!-- Expand button -->
+                <button id="expandBtn">
+                    <i class="ri-fullscreen-line"></i>
+                </button>
+                <!-- Overlay info for fullscreen view -->
+                <div id="overlayInfo" style="display: none;"></div>
+                <canvas id="gameCanvas"></canvas>
             </div>
-        </div>
-    </div>
-    <!-- Difficulty Selection Modal -->
-    <div id="difficultyModal" class="popup" style="display: flex;">
-        <div class="popup-content">
-            <h2 class="text-2xl font-bold text-yellow-400 mb-4">Choose Difficulty</h2>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-4">
-                <button class="difficulty-btn" data-difficulty="Easy">Easy</button>
-                <button class="difficulty-btn selected" data-difficulty="Medium">Medium</button>
-                <button class="difficulty-btn" data-difficulty="Hard">Hard</button>
+            <div id="mokeyPlayerContainer" class="hidden flex justify-center gap-2 mb-4">
+                <img id="mokeyPlayer" src="https://cdn-icons-png.flaticon.com/512/1998/1998721.png" alt="Monkey" class="hidden w-16 h-16">
             </div>
-            <button id="startGameBtn" class="game-button py-2 px-6 text-white w-full">Start Game</button>
         </div>
     </div>
     <!-- Puzzle Popup -->
-    <div id="puzzleModal" class="popup" style="display: none;">
+    <div id="puzzleModal" class="popup">
         <div class="popup-content">
             <h2 class="text-2xl font-bold text-yellow-400 mb-4">Solve the Puzzle</h2>
             <p id="puzzleQuestion" class="text-lg text-white mb-4"></p>
@@ -156,50 +178,70 @@ $username = $_SESSION['username'] ?? 'Monkey';
 </div>
 
 <script>
-    // Game tracking variables
     let score = 0;
     let level = 1;
     let selectedDifficulty = 'Medium';
     let bananaCounter = 3;
     let rows = [];
     let doors = [];
+    let gameStarted = false;
 
-    // DOM elements
     const scoreDisplay = document.getElementById('scoreDisplay');
     const levelDisplay = document.getElementById('levelDisplay');
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
+    const mokeyPlayerContainer = document.getElementById('mokeyPlayerContainer');
+    const overlayInfo = document.getElementById('overlayInfo');
+    const canvasContainer = document.getElementById('canvasContainer');
 
-    // Canvas elements
     const doorImage = new Image();
-    doorImage.src = 'https://www.transparentpng.com/download/door-png/door-icon-png-9.png';
-    const doorSize = 50;
-    const rowHeight = 10;
-    const rowSpacing = 100;
+    doorImage.src = 'http://localhost/banana-quest/frontend/assets/images/lookedBanana.png';
+    const monkeyImage = new Image();
+    // Use another monkey image for in-game (if needed)
+    monkeyImage.src = 'https://cdn-icons-png.flaticon.com/512/1998/1998721.png';
+    const monkeyPreStartImage = new Image();
+    // Use the specific local monkey image for the final row
+    monkeyPreStartImage.src = 'https://cdn-icons-png.flaticon.com/512/1998/1998721.png';
 
-    // Monkey properties
-    const monkeySize = 50;
+    // Adjusted sizes
+    const doorSize = 80;
+    const bigDoorSize = 100;
+    const rowHeight = 20;
+    const rowSpacing = 120;
+    const monkeySize = 60;
+
     let monkey = {
         x: canvas.width / 2 - monkeySize / 2,
-        y: canvas.height - monkeySize,
-        row: 0 // Starting below the first row
+        y: 0,
+        row: 0
     };
 
-    // Difficulty settings
     const difficultySettings = {
         Easy: { startDoors: 1, increment: 1 },
         Medium: { startDoors: 2, increment: 2 },
         Hard: { startDoors: 3, increment: 3 }
     };
 
-    // Update display function
+    // Adjust canvas dimensions based on fullscreen status
+    function adjustCanvasDimensions() {
+        if (canvasContainer.classList.contains('fullscreen')) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        } else {
+            canvas.width = canvasContainer.offsetWidth;
+            canvas.height = 500;
+        }
+    }
+
     function updateDisplay() {
         scoreDisplay.textContent = score;
         levelDisplay.textContent = level;
         document.getElementById('bananaCounter').textContent = `Bananas: ${bananaCounter}`;
+        if(canvasContainer.classList.contains('fullscreen')){
+            overlayInfo.innerHTML = `Score: ${score} | Level: ${level}`;
+        }
     }
 
-    // Generate puzzle
     function generatePuzzle() {
         const x = Math.floor(Math.random() * 10);
         const y = Math.floor(Math.random() * 10);
@@ -209,18 +251,14 @@ $username = $_SESSION['username'] ?? 'Monkey';
         };
     }
 
-    // Setup level
     function setupLevel(level, difficulty) {
         const settings = difficultySettings[difficulty];
         const numberOfRows = settings.startDoors + (level - 1) * settings.increment;
-
-        // Generate rows
         rows = [];
         for (let i = 1; i <= numberOfRows; i++) {
-            rows.push({ y: canvas.height - i * rowSpacing });
+            rows.push({ y: i * rowSpacing });
         }
-
-        // Generate doors for each row
+        canvas.height = Math.max(400, (numberOfRows + 2) * rowSpacing);
         doors = rows.map((row, index) => ({
             x: Math.random() * (canvas.width - doorSize),
             y: row.y - doorSize,
@@ -228,78 +266,126 @@ $username = $_SESSION['username'] ?? 'Monkey';
             cleared: false,
             puzzle: generatePuzzle()
         }));
-
-        // Add final door
-        const finalDoorY = rows.length > 0 ? rows[rows.length - 1].y - rowSpacing : 50;
-        doors.push({
-            x: canvas.width / 2 - doorSize / 2,
-            y: finalDoorY - doorSize,
-            row: 'final',
-            cleared: false
-        });
-
-        // Set bananaCounter
         bananaCounter = 3 * level;
-
-        // Reset monkey position
-        monkey.row = 0;
-        monkey.y = canvas.height - monkeySize;
-
-        // Draw canvas
+        monkey.row = rows.length;
+        monkey.y = rows[rows.length - 1].y - monkeySize / 2;
+        mokeyPlayerContainer.style.display = 'block';
         drawCanvas();
     }
 
-    // Draw canvas elements
+    function allDoorsCleared() {
+        return doors.every(door => door.cleared);
+    }
+
     function drawCanvas() {
-        // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Draw rows
-        ctx.fillStyle = '#8B4513';
-        rows.forEach(row => {
-            ctx.fillRect(0, row.y, canvas.width, rowHeight);
-        });
+        if (!gameStarted) {
+            const doorX = canvas.width / 2 - bigDoorSize / 2;
+            const doorY = 100;
+            ctx.drawImage(doorImage, doorX, doorY, bigDoorSize, bigDoorSize);
+            const monkeyX = doorX - monkeySize - 10;
+            const monkeyY = doorY + bigDoorSize / 2 - monkeySize / 2;
+            ctx.drawImage(monkeyPreStartImage, monkeyX, monkeyY, monkeySize, monkeySize);
+            ctx.fillStyle = "yellow";
+            ctx.font = "30px sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("Get me to the jangule", canvas.width / 2, 250);
 
-        // Draw doors if not cleared
-        if (doorImage.complete) {
+            const difficultyY = 300;
+            const difficulties = ["Easy", "Medium", "Hard"];
+            const xPositions = [canvas.width / 4, canvas.width / 2, 3 * canvas.width / 4];
+            ctx.font = "20px sans-serif";
+            difficulties.forEach((diff, index) => {
+                ctx.fillText(diff, xPositions[index], difficultyY);
+                if (selectedDifficulty === diff) {
+                    const textWidth = 100;
+                    const textHeight = 30;
+                    ctx.strokeStyle = "yellow";
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(xPositions[index] - textWidth / 2, difficultyY - textHeight / 2, textWidth, textHeight);
+                }
+            });
+
+            const startGameY = 350;
+            ctx.fillText("Start Game", canvas.width / 2, startGameY);
+        } else if (monkey.row === 1 && allDoorsCleared()) {
+            const doorX = canvas.width / 2 - bigDoorSize / 2;
+            const doorY = canvas.height / 2 - bigDoorSize / 2;
+            ctx.drawImage(doorImage, doorX, doorY, bigDoorSize, bigDoorSize);
+            const monkeyX = doorX - monkeySize - 10;
+            const monkeyY = doorY + bigDoorSize / 2 - monkeySize / 2;
+            // Use the specific local monkey image here
+            ctx.drawImage(monkeyPreStartImage, monkeyX, monkeyY, monkeySize, monkeySize);
+            ctx.fillStyle = "yellow";
+            ctx.font = "20px sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("Enter this door to go to next level", canvas.width / 2, doorY + bigDoorSize + 30);
+        } else {
+            ctx.fillStyle = '#8B4513';
+            rows.forEach(row => {
+                ctx.fillRect(0, row.y, canvas.width, rowHeight);
+            });
             doors.forEach(door => {
                 if (!door.cleared) {
                     ctx.drawImage(doorImage, door.x, door.y, doorSize, doorSize);
                 }
             });
-        }
-
-        // Draw monkey
-        const monkeyImage = new Image();
-        monkeyImage.src = 'https://cdn-icons-png.flaticon.com/512/1998/1998721.png';
-        if (monkeyImage.complete) {
             ctx.drawImage(monkeyImage, monkey.x, monkey.y, monkeySize, monkeySize);
         }
     }
 
-    // Handle door clicks
     canvas.addEventListener('click', (event) => {
         const rect = canvas.getBoundingClientRect();
         const clickX = event.clientX - rect.left;
         const clickY = event.clientY - rect.top;
 
-        doors.forEach(door => {
-            if (clickX >= door.x && clickX <= door.x + doorSize &&
-                clickY >= door.y && clickY <= door.y + doorSize) {
-                if (door.row === 'final' && areAllRowDoorsCleared()) {
-                    // Complete the level
-                    score += bananaCounter * 10;
-                    updateDisplay();
-                    level++;
-                    setupLevel(level, selectedDifficulty);
-                } else if (!door.cleared && door.row !== 'final') {
-                    showPuzzlePopup(door);
+        if (!gameStarted) {
+            const difficultyY = 300;
+            const xPositions = [canvas.width / 4, canvas.width / 2, 3 * canvas.width / 4];
+            const textWidth = 100;
+            const textHeight = 30;
+            const difficulties = ["Easy", "Medium", "Hard"];
+            difficulties.forEach((diff, index) => {
+                const rectX = xPositions[index] - textWidth / 2;
+                const rectY = difficultyY - textHeight / 2;
+                if (clickX >= rectX && clickX <= rectX + textWidth &&
+                    clickY >= rectY && clickY <= rectY + textHeight) {
+                    selectedDifficulty = diff;
+                    drawCanvas();
                 }
+            });
+
+            const startGameY = 350;
+            const startRectX = canvas.width / 2 - 75;
+            const startRectY = startGameY - 15;
+            const startWidth = 150;
+            const startHeight = 30;
+            if (clickX >= startRectX && clickX <= startRectX + startWidth &&
+                clickY >= startRectY && clickY <= startRectY + startHeight) {
+                gameStarted = true;
+                setupLevel(level, selectedDifficulty);
             }
-        });
+        } else if (monkey.row === 1 && allDoorsCleared()) {
+            const doorX = canvas.width / 2 - bigDoorSize / 2;
+            const doorY = canvas.height / 2 - bigDoorSize / 2;
+            if (clickX >= doorX && clickX <= doorX + bigDoorSize &&
+                clickY >= doorY && clickY <= doorY + bigDoorSize) {
+                level++;
+                setupLevel(level, selectedDifficulty);
+            }
+        } else {
+            doors.forEach(door => {
+                if (clickX >= door.x && clickX <= door.x + doorSize &&
+                    clickY >= door.y && clickY <= door.y + doorSize) {
+                    if (!door.cleared) {
+                        showPuzzlePopup(door);
+                    }
+                }
+            });
+        }
     });
 
-    // Show puzzle popup
     let currentDoor = null;
     function showPuzzlePopup(door) {
         currentDoor = door;
@@ -308,20 +394,22 @@ $username = $_SESSION['username'] ?? 'Monkey';
         document.getElementById('puzzleModal').style.display = 'flex';
     }
 
-    // Handle submit answer
     document.getElementById('submitAnswerBtn').addEventListener('click', () => {
         const answer = document.getElementById('puzzleAnswer').value.trim();
         if (answer === currentDoor.puzzle.answer) {
-            // Correct answer
             currentDoor.cleared = true;
             score += 2;
             updateDisplay();
             document.getElementById('puzzleModal').style.display = 'none';
             drawCanvas();
-            // Move monkey if applicable
-            if (monkey.row === currentDoor.row - 1) {
-                monkey.row++;
-                monkey.y = rows[monkey.row - 1].y - monkeySize;
+            if (monkey.row === doors.length) {
+                mokeyPlayerContainer.style.display = 'none';
+            }
+            if (currentDoor.row === monkey.row) {
+                if (monkey.row > 1) {
+                    monkey.row--;
+                    monkey.y = rows[monkey.row - 1].y - monkeySize / 2;
+                }
                 drawCanvas();
             }
         } else {
@@ -329,36 +417,34 @@ $username = $_SESSION['username'] ?? 'Monkey';
         }
     });
 
-    // Check if all row doors are cleared
-    function areAllRowDoorsCleared() {
-        return doors.filter(door => door.row !== 'final').every(door => door.cleared);
-    }
-
-    // Difficulty selection handling
-    const difficultyButtons = document.querySelectorAll('.difficulty-btn');
-    const startGameBtn = document.getElementById('startGameBtn');
-    const difficultyModal = document.getElementById('difficultyModal');
-
-    difficultyButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            difficultyButtons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-            selectedDifficulty = button.dataset.difficulty;
-        });
-    });
-
-    startGameBtn.addEventListener('click', () => {
-        difficultyModal.style.display = 'none';
-        console.log(`Selected difficulty: ${selectedDifficulty}`);
-        updateDisplay();
-        setupLevel(level, selectedDifficulty);
-    });
-
-    // Initial setup
     doorImage.onload = () => {
+        adjustCanvasDimensions();
         drawCanvas();
     };
     updateDisplay();
+
+    // Expand Button functionality for fullscreen toggle
+    const expandBtn = document.getElementById('expandBtn');
+    expandBtn.addEventListener('click', () => {
+        canvasContainer.classList.toggle('fullscreen');
+        if (canvasContainer.classList.contains('fullscreen')) {
+            overlayInfo.style.display = 'block';
+        } else {
+            overlayInfo.style.display = 'none';
+        }
+        adjustCanvasDimensions();
+        drawCanvas();
+        updateDisplay();
+    });
+
+    // Update canvas on window resize when not fullscreen
+    window.addEventListener('resize', () => {
+        if (!canvasContainer.classList.contains('fullscreen')) {
+            adjustCanvasDimensions();
+            drawCanvas();
+            updateDisplay();
+        }
+    });
 </script>
 </body>
 </html>
