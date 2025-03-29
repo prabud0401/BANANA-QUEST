@@ -80,7 +80,6 @@ $username = $_SESSION['username'] ?? 'Monkey';
             border-radius: 0;
             z-index: 2000;
         }
-        /* Expand button style */
         #expandBtn {
             position: absolute;
             top: 10px;
@@ -92,7 +91,6 @@ $username = $_SESSION['username'] ?? 'Monkey';
             font-size: 2rem;
             color: yellow;
         }
-        /* Overlay for score and level when fullscreen */
         #overlayInfo {
             position: absolute;
             top: 10px;
@@ -117,7 +115,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
 <div class="w-full h-full flex flex-col md:flex-row justify-around items-center">
     <span class="extra-glow"></span>
     <!-- Left Side: Profile Area -->
-    <div class="w-full md:w-1/2 flex flex-col items-center justify-between p-4 profile-section">
+    <div class="w-full md:w-1/2 flex flex-col items-center justify-between profile-section">
         <div class="profile-box w-full max-w-lg text-center space-y-4 p-4">
             <div class="space-y-6 animate-pulse">
                 <div class="flex items-center justify-center gap-2 sm:gap-4">
@@ -126,7 +124,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
                         BANANA QUEST
                     </h1>
                 </div>
-                <p class="text-base sm:text-xl md:text-2xl text-yellow-100 font-medium tracking-wide px-2">
+                <p class="md:inline hidden text-base sm:text-xl md:text-2xl text-yellow-100 font-medium tracking-wide px-2">
                     <span class="border-b-2 border-yellow-400">Game Mode</span>
                 </p>
             </div>
@@ -134,7 +132,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
             <p class="text-base sm:text-xl text-yellow-100 font-medium tracking-wide">
                 <span class="border-b-2 border-yellow-400"><?php echo htmlspecialchars($username); ?></span>
             </p>
-            <div class="text-yellow-400 space-y-2">
+            <div class="md:inline hidden text-yellow-400 space-y-2">
                 <h2 class="text-2xl sm:text-3xl font-bold">Swing into Action!</h2>
                 <p class="text-lg sm:text-xl">Get ready to play!</p>
             </div>
@@ -144,7 +142,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
         </a>
     </div>
     <!-- Right Side: Game Display Area -->
-    <div class="w-full md:w-1/2 flex flex-col items-center justify-center p-4 game-section">
+    <div class="w-full md:w-1/2 flex flex-col items-center justify-center game-section">
         <div class="w-full max-w-2xl text-center space-y-4 p-4">
             <!-- Normal score and level display -->
             <div class="game-info flex justify-between text-yellow-400 font-bold text-lg">
@@ -185,6 +183,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
     let rows = [];
     let doors = [];
     let gameStarted = false;
+    const username = '<?php echo htmlspecialchars($username); ?>';
 
     const scoreDisplay = document.getElementById('scoreDisplay');
     const levelDisplay = document.getElementById('levelDisplay');
@@ -197,13 +196,10 @@ $username = $_SESSION['username'] ?? 'Monkey';
     const doorImage = new Image();
     doorImage.src = 'http://localhost/banana-quest/frontend/assets/images/lookedBanana.png';
     const monkeyImage = new Image();
-    // Use another monkey image for in-game (if needed)
     monkeyImage.src = 'https://cdn-icons-png.flaticon.com/512/1998/1998721.png';
     const monkeyPreStartImage = new Image();
-    // Use the specific local monkey image for the final row
     monkeyPreStartImage.src = 'https://cdn-icons-png.flaticon.com/512/1998/1998721.png';
 
-    // Adjusted sizes
     const doorSize = 80;
     const bigDoorSize = 100;
     const rowHeight = 20;
@@ -222,7 +218,6 @@ $username = $_SESSION['username'] ?? 'Monkey';
         Hard: { startDoors: 3, increment: 3 }
     };
 
-    // Adjust canvas dimensions based on fullscreen status
     function adjustCanvasDimensions() {
         if (canvasContainer.classList.contains('fullscreen')) {
             canvas.width = window.innerWidth;
@@ -237,7 +232,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
         scoreDisplay.textContent = score;
         levelDisplay.textContent = level;
         document.getElementById('bananaCounter').textContent = `Bananas: ${bananaCounter}`;
-        if(canvasContainer.classList.contains('fullscreen')){
+        if (canvasContainer.classList.contains('fullscreen')) {
             overlayInfo.innerHTML = `Score: ${score} | Level: ${level}`;
         }
     }
@@ -315,7 +310,6 @@ $username = $_SESSION['username'] ?? 'Monkey';
             ctx.drawImage(doorImage, doorX, doorY, bigDoorSize, bigDoorSize);
             const monkeyX = doorX - monkeySize - 10;
             const monkeyY = doorY + bigDoorSize / 2 - monkeySize / 2;
-            // Use the specific local monkey image here
             ctx.drawImage(monkeyPreStartImage, monkeyX, monkeyY, monkeySize, monkeySize);
             ctx.fillStyle = "yellow";
             ctx.font = "20px sans-serif";
@@ -333,6 +327,31 @@ $username = $_SESSION['username'] ?? 'Monkey';
             });
             ctx.drawImage(monkeyImage, monkey.x, monkey.y, monkeySize, monkeySize);
         }
+    }
+
+    function sendGameDataToBackend() {
+        const gameData = {
+            username: username,
+            level: level,
+            score: score,
+            difficulty: selectedDifficulty,
+            bananas: bananaCounter
+        };
+
+        fetch('http://localhost/banana-quest/backend/save_game_data.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(gameData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Game data saved successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error saving game data:', error);
+        });
     }
 
     canvas.addEventListener('click', (event) => {
@@ -371,6 +390,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
             const doorY = canvas.height / 2 - bigDoorSize / 2;
             if (clickX >= doorX && clickX <= doorX + bigDoorSize &&
                 clickY >= doorY && clickY <= doorY + bigDoorSize) {
+                sendGameDataToBackend(); // Send data before advancing to next level
                 level++;
                 setupLevel(level, selectedDifficulty);
             }
@@ -423,7 +443,6 @@ $username = $_SESSION['username'] ?? 'Monkey';
     };
     updateDisplay();
 
-    // Expand Button functionality for fullscreen toggle
     const expandBtn = document.getElementById('expandBtn');
     expandBtn.addEventListener('click', () => {
         canvasContainer.classList.toggle('fullscreen');
@@ -437,7 +456,6 @@ $username = $_SESSION['username'] ?? 'Monkey';
         updateDisplay();
     });
 
-    // Update canvas on window resize when not fullscreen
     window.addEventListener('resize', () => {
         if (!canvasContainer.classList.contains('fullscreen')) {
             adjustCanvasDimensions();
