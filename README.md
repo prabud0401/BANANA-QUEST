@@ -24,7 +24,7 @@ banana-quest/
 │   ├── functions.php            # Core backend functions
 │   ├── login.php                # Handles user login via AJAX
 │   ├── logout.php               # Handles user logout
-│   ├── puzzle_ajax.php          # Handles Banana API puzzle requests via AJAX
+│   ├── banana_api.php          # Handles Banana API puzzle requests via AJAX
 │   ├── save_game_data.php       # Saves game progress
 │   ├── signup.php               # Handles user registration via AJAX
 │   └── update_password.php      # Updates user passwords

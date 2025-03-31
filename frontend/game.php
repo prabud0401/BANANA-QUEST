@@ -8,114 +8,7 @@ if (!isset($_SESSION['username'])) {
 }
 $username = $_SESSION['username'] ?? 'Monkey';
 ?>
-
-    <style>
-        @keyframes glow-rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .profile-box {
-            background: rgba(58, 98, 19, 0.9);
-            border: 2px solid #facc15;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(250, 204, 21, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .profile-box:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 40px rgba(250, 204, 21, 0.5);
-        }
-        .monkey-float {
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        @media (min-width: 768px) {
-            .game-section, .profile-section {
-                max-height: 100vh;
-                width: 50%;
-            }
-        }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-        }
-        .popup-content {
-            background: rgba(58, 98, 19, 0.9);
-            border: 2px solid #facc15;
-            border-radius: 15px;
-            padding: 1.5rem;
-            max-width: 90%;
-            width: 400px;
-            text-align: center;
-        }
-        .canvas-container {
-            width: 100%;
-            height: 400px;
-            overflow-y: auto;
-            border: 2px solid #facc15;
-            border-radius: 10px;
-            background: #3b6213;
-            position: relative;
-            transition: all 1s ease-in-out;
-        }
-        .canvas-container.fullscreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            border-radius: 0;
-            z-index: 2000;
-        }
-        #expandBtn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 2500;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 2rem;
-            color: yellow;
-        }
-        #overlayInfo {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 2600;
-            color: yellow;
-            font-size: 1.2rem;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-        .game-info {
-            background: rgba(58, 98, 19, 0.9);
-            border: 2px solid #facc15;
-            border-radius: 10px;
-            padding: 0.5rem 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        /* Make the feedback images responsive (especially for mobile) */
-        .feedback-image {
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto 1rem auto;
-            display: block;
-        }
-    </style>
+<link href="http://localhost/banana-quest/frontend/assets/css/game.css" rel="stylesheet">
 
 <div class="w-full h-full flex flex-col md:flex-row justify-around items-center">
     <span class="extra-glow"></span>
@@ -191,6 +84,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
         </div>
     </div>
 </div>
+<?php include 'http://localhost/banana-quest/frontend/footer.php'; ?>
 
 <script>
     let score = 0;
@@ -344,8 +238,8 @@ $username = $_SESSION['username'] ?? 'Monkey';
     // Show the puzzle modal and fetch a puzzle via AJAX.
     function showPuzzlePopup(door) {
         currentDoor = door;
-        // Use AJAX (GET) to fetch a new puzzle from puzzle_ajax.php.
-        fetch('http://localhost/banana-quest/backend/puzzle_ajax.php')
+        // Use AJAX (GET) to fetch a new puzzle from banana_api.php.
+        fetch('http://localhost/banana-quest/backend/banana_api.php')
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
@@ -381,7 +275,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
         }
         const formData = new URLSearchParams();
         formData.append('answer', answer);
-        fetch('http://localhost/banana-quest/backend/puzzle_ajax.php', {
+        fetch('http://localhost/banana-quest/backend/banana_api.php', {
             method: 'POST',
             body: formData
         })
@@ -546,5 +440,3 @@ $username = $_SESSION['username'] ?? 'Monkey';
         }
     });
 </script>
-</body>
-</html>

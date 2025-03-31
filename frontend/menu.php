@@ -8,9 +8,7 @@ if (!isset($_SESSION['username'])) {
 }
 $username = $_SESSION['username'] ?? 'Monkey';
 ?>
-<style>
 
-</style>
 <div class="w-full h-full flex flex-col md:flex-row justify-around items-center ">
     <!-- Header Section (Top on Mobile, Left on Desktop) -->
     <div class="space-y-6 md:order-1 order-1 text-center w-full flex flex-col justify-center items-center">
@@ -39,7 +37,9 @@ $username = $_SESSION['username'] ?? 'Monkey';
         </a>
     </div>
 </div>
-</body>
+
+<?php include 'http://localhost/banana-quest/frontend/footer.php'; ?>
+
 <script>
     const soundToggle = document.getElementById('soundToggle');
     let soundOn = true;
@@ -48,4 +48,3 @@ $username = $_SESSION['username'] ?? 'Monkey';
         soundToggle.innerHTML = soundOn ? '<i class="ri-volume-up-fill"></i> Sound: On' : '<i class="ri-volume-mute-fill"></i> Sound: Off';
     });
 </script>
-</html>

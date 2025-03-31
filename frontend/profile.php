@@ -93,7 +93,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
             <img src="http://localhost/banana-quest/frontend/assets/images/logoN.png" alt="Monkey Icon" class="w-24 sm:w-40 md:w-64 lg:w-80 monkey-float cursor-pointer hover:scale-110 transition-transform mx-auto">
             <p class="text-base sm:text-xl text-yellow-100 font-medium tracking-wide"><span class="border-b-2 border-yellow-400"><?php echo htmlspecialchars($username); ?></span></p>
             <div class="text-white space-y-2">
-                <p class="text-lg sm:text-xl">Total Score: <span id="totalScore">-</span></p>
+                <p class="text-lg sm:text-xl">Highest Score: <span id="totalScore">-</span></p>
                 <p class="text-lg sm:text-xl">Games Played: <span id="gamesPlayed">-</span></p>
             </div>
             <button id="updatePasswordBtn" class="game-button py-2 px-6 text-lg text-white mt-4">Update Password</button>
@@ -141,7 +141,7 @@ $username = $_SESSION['username'] ?? 'Monkey';
         </div>
     </div>
 </div>
-</body>
+
 <script>
     // Fetch user history via AJAX
     function fetchHistory() {
@@ -165,9 +165,9 @@ $username = $_SESSION['username'] ?? 'Monkey';
                             <td class="p-2">${entry.timestamp}</td>
                         </tr>
                     `).join('');
-                    const totalScore = data.reduce((sum, entry) => sum + parseInt(entry.score), 0);
-                    const gamesPlayed = data.filter(entry => entry.action.includes('Completed Level') || entry.action.includes('Lost a Life')).length;
-                    totalScoreSpan.textContent = totalScore;
+                    const highestScore = Math.max(...data.map(entry => parseInt(entry.score)));
+                    const gamesPlayed = data.length;
+                    totalScoreSpan.textContent = highestScore;
                     gamesPlayedSpan.textContent = gamesPlayed;
                 }
             })
@@ -258,4 +258,3 @@ $username = $_SESSION['username'] ?? 'Monkey';
         modalLoading.style.display = 'none';
     });
 </script>
-</html>

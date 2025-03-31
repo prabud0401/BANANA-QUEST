@@ -8,113 +8,8 @@ if (!isset($_SESSION['username'])) {
 }
 $username = $_SESSION['username'] ?? 'Monkey';
 ?>
-<style>
+<link href="http://localhost/banana-quest/frontend/assets/css/leaderboard.css" rel="stylesheet">
 
-    @keyframes button-pulse {
-        0% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
-        50% { box-shadow: 0 0 20px rgba(250, 204, 21, 0.8); }
-        100% { box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
-    }
-    /* Leaderboard-specific styles */
-    .leaderboard-entry {
-        background: rgba(58, 98, 19, 0.9);
-        border: 2px solid #facc15;
-        border-radius: 15px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .leaderboard-entry:hover {
-        transform: scale(1.03);
-        box-shadow: 0 8px 20px rgba(250, 204, 21, 0.6);
-    }
-    .current-user {
-        background: linear-gradient(145deg, #5a9e14, #3b6213);
-        border: 4px solid #facc15;
-        border-radius: 20px;
-        padding: 2rem;
-        box-shadow: 0 10px 30px rgba(250, 204, 21, 0.6);
-        position: relative;
-        overflow: hidden;
-    }
-    .current-user::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(250, 204, 21, 0.2) 0%, transparent 70%);
-        animation: glow-rotate 10s linear infinite;
-    }
-    @keyframes glow-rotate {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    .banana-icon {
-        animation: banana-wiggle 2s ease-in-out infinite;
-    }
-    @keyframes banana-wiggle {
-        0%, 100% { transform: rotate(-5deg); }
-        50% { transform: rotate(5deg); }
-    }
-    /* Custom Scrollbar for Leaderboard */
-    #leaderboardList {
-        max-height: 50vh; /* Default for mobile */
-        overflow-y: auto;
-        scrollbar-width: thin; /* Firefox */
-        scrollbar-color: #facc15 #3b6213; /* Firefox */
-        transition: all 0.3s ease;
-    }
-    #leaderboardList::-webkit-scrollbar {
-        width: 12px; /* Chrome, Safari, Edge */
-    }
-    #leaderboardList::-webkit-scrollbar-track {
-        background: #3b6213;
-        border-radius: 10px;
-        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-    }
-    #leaderboardList::-webkit-scrollbar-thumb {
-        background: #facc15;
-        border-radius: 10px;
-        border: 2px solid #3b6213;
-        transition: background 0.3s ease;
-    }
-    #leaderboardList::-webkit-scrollbar-thumb:hover {
-        background: #ffd700;
-        animation: scroll-glow 1.5s infinite;
-    }
-    @keyframes scroll-glow {
-        0% { box-shadow: 0 0 5px #facc15; }
-        50% { box-shadow: 0 0 15px #facc15; }
-        100% { box-shadow: 0 0 5px #facc15; }
-    }
-    /* Desktop-specific adjustments */
-    @media (min-width: 768px) {
-        #leaderboardList {
-            max-height: 60vh; /* More space on desktop */
-        }
-        .leaderboard-container {
-            height: 100vh; /* Full viewport height */
-            display: flex;
-            flex-direction: row;
-        }
-        .current-user-section {
-            flex: 1;
-            overflow-y: auto;
-            max-height: 100vh;
-        }
-        .leaderboard-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: hidden;
-        }
-    }
-</style>
 <div class="w-full h-full flex flex-col md:flex-row justify-around items-center md:spce-y-0 space-y-6">
     <!-- Current User Position (Top on Mobile, Left on Desktop) -->
     <div class="space-y-6 md:order-1 order-1 text-center w-full flex flex-col justify-center items-center flex-shrink-0 current-user-section">
@@ -144,7 +39,9 @@ $username = $_SESSION['username'] ?? 'Monkey';
         </a>
     </div>
 </div>
-</body>
+
+<?php include 'http://localhost/banana-quest/frontend/footer.php'; ?>
+
 <script>
     // Fetch leaderboard data via AJAX
     fetch('http://localhost/banana-quest/backend/fetch_users_data.php')
@@ -193,4 +90,3 @@ $username = $_SESSION['username'] ?? 'Monkey';
             document.getElementById('leaderboardList').innerHTML = '<p class="text-red-400">Failed to load leaderboard.</p>';
         });
 </script>
-</html>

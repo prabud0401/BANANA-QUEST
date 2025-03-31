@@ -1,0 +1,70 @@
+@keyframes glow-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.profile-box {
+    background: rgba(58, 98, 19, 0.9);
+    border: 2px solid #facc15;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(250, 204, 21, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.profile-box:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 40px rgba(250, 204, 21, 0.5);
+}
+.history-section, .profile-section {
+    overflow-y: auto;
+}
+#historyTable {
+    border-collapse: collapse;
+    background: rgba(58, 98, 19, 0.9);
+    border: 2px solid #facc15;
+    border-radius: 10px;
+    overflow: hidden;
+}
+#historyTable th, #historyTable td {
+    padding: 0.75rem 1rem;
+    white-space: nowrap; /* Prevents text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds "..." if text is truncated */
+}
+#historyTable thead tr {
+    background: #3b6213;
+    border-bottom: 2px solid #facc15;
+}
+#historyTable tbody tr {
+    border-bottom: 1px solid #facc15;
+}
+#historyTable tbody tr:last-child {
+    border-bottom: none;
+}
+#historyTable tbody tr:hover {
+    background: rgba(90, 158, 20, 0.8);
+}
+@media (min-width: 768px) {
+    .history-section, .profile-section {
+        max-height: 100vh;
+    }
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.popup-content {
+    background: rgba(58, 98, 19, 0.9);
+    border: 2px solid #facc15;
+    border-radius: 15px;
+    padding: 1.5rem;
+    max-width: 90%;
+    width: 400px;
+    text-align: center;
+}

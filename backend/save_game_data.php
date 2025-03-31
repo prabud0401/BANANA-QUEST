@@ -36,18 +36,16 @@ try {
 
     $user_id = $user['id'];
     $score = (int)$data['score'];
-    $details = json_encode([
-        'level' => (int)$data['level'],
-        'difficulty' => $data['difficulty'],
-        'bananas' => (int)$data['bananas']
-    ]);
+    $action = $data['difficulty'].' Level';
+    
+    $details = 'Level ' . $data['level'] .' - '. $data['bananas'] . ' bananas collected';
 
     // Insert the game data into user_history
     $stmt = $pdo->prepare("
         INSERT INTO user_history (user_id, action, score, details, timestamp)
-        VALUES (?, 'level_completed', ?, ?, NOW())
+        VALUES (?, ?, ?, ?, NOW())
     ");
-    $stmt->execute([$user_id, $score, $details]);
+    $stmt->execute([$user_id, $action, $score, $details]);
 
     echo json_encode(['status' => 'success', 'message' => 'Game data saved successfully']);
 } catch (PDOException $e) {
