@@ -21,7 +21,7 @@ Per the assignment requirements, the **Banana API** (https://marcconrad.com/uob/
     - `user_history`: Tracks user actions and scores.
 
 ## Additional Materials
-1. **Video Presentation**: A video of maximum 10 minutes length.
+1. **Video Presentation**: [Banana-Quest Demo video](https://youtu.be/5e8mCmJb4QM)
 2. **Project Management**: [Notion Workspace](https://www.notion.so/BANANA-QUEST-1c0460e45a4880ddb4f1d4552e9bb169?pvs=21)
 3. **Design**:
     - [Figma Design](https://www.figma.com/design/33HWOg5Y8O7xeUO7vkOHFz/Banana-quest?node-id=0-1&p=f&t=cq0MQqRPZ8ZPILOv-0)
