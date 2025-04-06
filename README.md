@@ -27,7 +27,18 @@ Per the assignment requirements, the **Banana API** (https://marcconrad.com/uob/
     - [Figma Design](https://www.figma.com/design/33HWOg5Y8O7xeUO7vkOHFz/Banana-quest?node-id=0-1&p=f&t=cq0MQqRPZ8ZPILOv-0)
 4. **Source Code**:
     - [GitHub Repository](https://github.com/prabud0401/BANANA-QUEST.git)
-5. **Evidence of Presentation**: Proof of project presentation to the tutor in Week 8.
+
+5. **DSA concepts**
+## Key Concepts and Their Usage
+
+| **Concept**              | **How It’s Used**                                      | **Example**                                   |
+|--------------------------|-------------------------------------------------------|-----------------------------------------------|
+| **High Cohesion, Low Coupling** | Frontend (UI/game) and backend (API/data) are separate, linked by AJAX. | `fetch('banana_api.php')` fetches puzzles.   |
+| **Events**               | Clicks trigger actions like puzzles or level-ups.     | `canvas.addEventListener('click', ...)`      |
+| **Virtual Identity**     | Sessions track users via username.                    | `$_SESSION['username']` checks login.        |
+| **Interoperability**     | JSON over HTTP connects frontend, backend, and API.   | `fetch('save_game_data.php', { body: JSON })`|
+
+6. **Evidence of Presentation**: Proof of project presentation to the tutor in Week 8.
 ![alt text](Appendix/Scan_20250330.png)
 ![alt text](<Appendix/Scan_20250330 (2).png>) 
 ![alt text](<Appendix/Scan_20250330 (3).png>) 
